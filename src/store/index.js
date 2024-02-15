@@ -1,5 +1,4 @@
-import { legacy_createStore as createStore , combineReducers, compose, applyMiddleware } from 'redux';
-import { thunk } from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit'
 
 import heroes from '../reducers/heroes';
 import filters from '../reducers/filters';
@@ -28,14 +27,26 @@ const stringMiddleware = () => (next) => (action) => {
         }
         return next(action)
 }
+//configureStore from Redux Toolkit
+// 1. импорт configureStore  із toolkit
+// 2. створюємо хранилище з наступними параметрами:
+//  reducer - об'єкт із усіх редьюсеров
+//  middleware - берем внутренную функцію редикс-тулкіт getDefaultMiddleware и присоединям наш /middleware
+//  devTools - подключаем со значение True только для режима розробки
 
-const store = createStore(
-                    combineReducers({heroes, filters}),
-                    compose(
-                       applyMiddleware(thunk,stringMiddleware),
-                        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-                    )
+const store = configureStore({
+    reducer: {heroes, filters},
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(stringMiddleware),
+    devTools: process.env.NODE_ENV !== 'production'
+})
 
-                    );
+// const store = createStore(
+//                     combineReducers({heroes, filters}),
+//                     compose(
+//                        applyMiddleware(thunk,stringMiddleware),
+//                         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//                     )
+
+//                     );
 
 export default store;
