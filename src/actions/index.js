@@ -1,12 +1,7 @@
-import { heroesFetching, heroesFetched,heroesFetchingError } from '../components/heroesList/heroesSlice';
+
 import { filtersFetching, filtersFetched, filtersFetchingError} from '../components/heroesFilters/filterSlice';
 
-export const heroesFetch = (request) => (dispatch) => {
-    dispatch(heroesFetching());
-    request("http://localhost:3001/heroes")
-        .then(data => dispatch(heroesFetched(data)))
-        .catch(() => dispatch(heroesFetchingError()))
-}
+
 export const filterFetch = (request) => (dispatch) => {
     dispatch(filtersFetching());
         request("http://localhost:3001/filters")
