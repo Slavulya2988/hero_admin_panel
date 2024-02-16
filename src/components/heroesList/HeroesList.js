@@ -45,7 +45,7 @@ const HeroesList = () => {
     const {request} = useHttp();
 
     useEffect(() => {
-        dispatch(heroesFetch(request));
+        dispatch(heroesFetch());
                // eslint-disable-next-line
     }, []);
 
