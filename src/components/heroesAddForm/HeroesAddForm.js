@@ -8,7 +8,7 @@
 // Элементы <option></option> желательно сформировать на базе
 // данных из фильтров
 import { useState } from 'react';
-import { heroAdd } from '../../actions';
+import { heroAdd } from '../heroesList/heroesSlice';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../hooks/http.hook';
 
