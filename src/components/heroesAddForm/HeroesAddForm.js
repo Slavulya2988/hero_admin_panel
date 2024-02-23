@@ -7,12 +7,15 @@
 // Дополнительно:
 // Элементы <option></option> желательно сформировать на базе
 // данных из фильтров
-import { useState } from 'react';
-import { heroAdd } from '../heroesList/heroesSlice';
-import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../hooks/http.hook';
-
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import store from '../../store';
+
+import { selectAll} from '../heroesFilters/filterSlice';
+import { heroAdd } from '../heroesList/heroesSlice';
+
 
 const HeroesAddForm = () => {
 
@@ -20,7 +23,9 @@ const HeroesAddForm = () => {
     const [heroDescr, setHeroDescr] = useState('');
     const [heroElement, setHeroElement] = useState('');
 
-    const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
+    const { filtersLoadingStatus} = useSelector(state => state.filters);
+    const filters = selectAll(store.getState());
+    //  console.log(filters);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -36,7 +41,7 @@ const HeroesAddForm = () => {
                 element: heroElement
             }
             request(`http://localhost:3001/heroes`, 'POST', JSON.stringify(newHero))
-
+           .then(res => console.log(res, 'Отправка успешна'))
            .then(dispatch(heroAdd(newHero)))
            .catch(err => console.log(err))
 
@@ -46,24 +51,22 @@ const HeroesAddForm = () => {
         }
     }
 
-    const renderOptions = (arr) => {
-        if (filtersLoadingStatus === "loading") {
+    const renderOptions = (filters, status) => {
+        if (status === "loading") {
             return <option>Загрузка элементов</option>
-        } else if (filtersLoadingStatus === "error") {
+        } else if (status === "error") {
             return <h5 className="text-center mt-5">Помилка завантаження</h5>
         }
 
-        if (arr.length === 0){
-            return;
-        } else {
-            return arr.map(({name, label}) => {
+        if (filters && filters.length > 0){
+            return filters.map(({name, label}) => {
                 // if (name === 'all')  return;
                 return <option key={name} value={name}> {label} </option>;
             })
         }
     }
 
-    const options = renderOptions(filters);
+    const options = renderOptions(filters, filtersLoadingStatus);
 
     return (
         <form className="border p-4 shadow-lg rounded"

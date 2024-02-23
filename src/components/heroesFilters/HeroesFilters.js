@@ -4,18 +4,20 @@
 // Активный фильтр имеет класс active
 // Изменять json-файл для удобства МОЖНО!
 // Представьте, что вы попросили бэкенд-разработчика об этом
+import {useHttp} from '../../hooks/http.hook';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useHttp} from '../../hooks/http.hook';
-import {activeFilterChanged} from './filterSlice';
-import {filterFetch} from '../../actions/index';
+import {activeFilterChanged , filterFetch, selectAll} from './filterSlice';
+
 import classNames from 'classnames';
+import store from '../../store';
 
 import Spinner from '../spinner/Spinner';
 
 const HeroesFilters = () => {
 
-    const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
+    const {filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
+    const filters = selectAll(store.getState());
     const dispatch = useDispatch();
     const {request} = useHttp();
 

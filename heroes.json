@@ -23,30 +23,41 @@
       "name": "Slava",
       "description": "applyMiddleware",
       "element": "earth"
+    },
+    {
+      "id": "39187a8e-d22c-4293-91e3-22f50562b2b4",
+      "name": "qqqqqqqqqqqqqqq",
+      "description": "zxccxzxcz",
+      "element": "water"
     }
   ],
   "filters": [
     {
+      "id": "all",
       "name": "all",
       "label": "Усі",
       "className": "btn btn-outline-dark"
     },
     {
+      "id": "fire",
       "name": "fire",
       "label": "Вогонь",
       "className": "btn btn-danger"
     },
     {
+      "id": "water",
       "name": "water",
       "label": "Вода",
       "className": "btn btn-primary"
     },
     {
+      "id": "wind",
       "name": "wind",
       "label": "Вітер",
       "className": "btn btn-success"
     },
     {
+      "id": "earth",
       "name": "earth",
       "label": "Земля",
       "className": "btn btn-secondary"
